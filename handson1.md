@@ -6,10 +6,10 @@ You should submit answers only to the questions asked. In particular, please do 
 2. The `dig` answer for `thyme` includes a record of type `CNAME`. In the terminology of chapter 4, what does `CNAME` mean?
 3. What is the expiration time for the `thyme` `CNAME` record?
 4. Run these commands to find what the computer you're using gets when it looks up `“data”` and `“data.”`. What are the two resulting IP addresses?
-```bash
-dig +domain=mit.edu data
-dig +domain=mit.edu data.
-```
+    ```bash
+    dig +domain=mit.edu data
+    dig +domain=mit.edu data.
+    ```
 
 5. Why are the results different? Look at the man page for `dig` to see what the `+domain=`
 parameter does. Based on the output of the two commands, what is the difference between the DNS searches being performed for `data` and `data.`?
@@ -35,14 +35,14 @@ athena% dig . ns
 
 6. We use dig `@servername targetname +norecurs` to do this.
 7. I used the following sequence of commands:
-```bash
-dig @m.root-servers.net lirone.csail.mit.edu +norecurs
-dig @a.edu-servers.net lirone.csail.mit.edu +norecurs
-dig @usw2.akam.net lirone.csail.mit.edu +norecurs
-dig @auth-ns2.csail.mit.edu lirone.csail.mit.edu +norecurs
-```
+    ```bash
+    dig @m.root-servers.net lirone.csail.mit.edu +norecurs
+    dig @a.edu-servers.net lirone.csail.mit.edu +norecurs
+    dig @usw2.akam.net lirone.csail.mit.edu +norecurs
+    dig @auth-ns2.csail.mit.edu lirone.csail.mit.edu +norecurs
+    ```
 
-This sequence of commands led to an IP address of `128.52.129.186` for `lirone`.
+    This sequence of commands led to an IP address of `128.52.129.186` for `lirone`.
 
 # Understanding Caching
 These queries will show you how your local machine's DNS cache works.

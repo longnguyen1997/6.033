@@ -51,7 +51,7 @@ www.aoyama.ac.jp
    1024: round-trip min/avg/max/stddev = 214.223/260.954/319.290/38.338 ms
    2056: 10 packets transmitted, 0 packets received, 100.0% packet loss
    ```
-   `www.aoyama.ac.jp`
+   `www.aoyama.ac.jp`:
    ```
    56: round-trip min/avg/max/stddev = 69.869/71.780/78.970/2.521 ms
    512: round-trip min/avg/max/stddev = 70.179/71.516/73.368/1.028 ms

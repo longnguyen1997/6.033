@@ -68,58 +68,58 @@ abelbethmaachah [1570895, 1700412]
 
 11. This assignment took about 2-3 hours combined across a few days of the week. Because I self-studied this, code is provided below as well.
 
-```python
-class ReverseIndex(MapReduce):
-    """
-    Extends the Map Reduce class to produce ReverseIndex.
-    """
-    def __init__(self, maptask, reducetask, path):
-        MapReduce.__init__(self,  maptask, reducetask, path)
-
-    # Produce a (key, value) pair for each title word in value
-    def Map(self, keyvalue, value):
+    ```python
+    class ReverseIndex(MapReduce):
         """
-        Map function for ReverseIndex.
-        The Map function should produce for each word in the input a pair (word, offset),
-        where offset is the byte offset in the input file.
-        See WordCount Map() in mapreduce.py for ideas on how to implement.
+        Extends the Map Reduce class to produce ReverseIndex.
         """
-        results = []
-        i = 0
-        n = len(value)
-        while i < n:
-            # skip non-ascii letters in C/C++ style a la MapReduce paper:
-            while i < n and value[i] not in string.ascii_letters:
-                i += 1
-            start = i
-            while i < n and value[i] in string.ascii_letters:
-                i += 1
-            w = value[start:i]
-            if start < i and w.istitle():
-                results.append ((w.lower(), int(keyvalue) + start))
-        return results
+        def __init__(self, maptask, reducetask, path):
+            MapReduce.__init__(self,  maptask, reducetask, path)
 
-    # Reduce [(key,value), ...])
-    def Reduce(self, key, keyvalues):
+        # Produce a (key, value) pair for each title word in value
+        def Map(self, keyvalue, value):
+            """
+            Map function for ReverseIndex.
+            The Map function should produce for each word in the input a pair (word, offset),
+            where offset is the byte offset in the input file.
+            See WordCount Map() in mapreduce.py for ideas on how to implement.
+            """
+            results = []
+            i = 0
+            n = len(value)
+            while i < n:
+                # skip non-ascii letters in C/C++ style a la MapReduce paper:
+                while i < n and value[i] not in string.ascii_letters:
+                    i += 1
+                start = i
+                while i < n and value[i] in string.ascii_letters:
+                    i += 1
+                w = value[start:i]
+                if start < i and w.istitle():
+                    results.append ((w.lower(), int(keyvalue) + start))
+            return results
+
+        # Reduce [(key,value), ...])
+        def Reduce(self, key, keyvalues):
+            """
+            The Reducefunction should output (word, [offset, offset, ...]), sorted by ascending offset.
+            Reduce function for ReverseIndex.
+            Note: this should be for all words, not just the Title words
+            See WordCount Map() in mapreduce.py for reference
+
+            """
+            return key, sorted(tuple[1] for tuple in keyvalues)
+
+    def run_reverse_index(file):
         """
-        The Reducefunction should output (word, [offset, offset, ...]), sorted by ascending offset.
-        Reduce function for ReverseIndex.
-        Note: this should be for all words, not just the Title words
-        See WordCount Map() in mapreduce.py for reference
-
+        Runs the map and reduce function of ReverseIndex
+        See main function of mapreduce.py for reference
+        :param file: path to king james bible
+        :type file: string
+        :return: list of tuples( names , list( byte offsets))
+        :rtype: [(string, [int,]]
         """
-        return key, sorted(tuple[1] for tuple in keyvalues)
-
-def run_reverse_index(file):
-    """
-    Runs the map and reduce function of ReverseIndex
-    See main function of mapreduce.py for reference
-    :param file: path to king james bible
-    :type file: string
-    :return: list of tuples( names , list( byte offsets))
-    :rtype: [(string, [int,]]
-    """
-    ri = ReverseIndex(4, 2, sys.argv[1])
-    ri.run()
-    return ri.Merge()
-```
+        ri = ReverseIndex(4, 2, sys.argv[1])
+        ri.run()
+        return ri.Merge()
+    ```

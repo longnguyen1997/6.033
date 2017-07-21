@@ -6,14 +6,14 @@ For each question, give a series of UNIX commands that will produce the result.
 2. The number of words in the file `/usr/share/dict/words (*)` which do not
  contain any of the letters a, e, i, o, or u (upper and lower case).
 3. A 5x6 matrix of entries of alternating 1's and 0's. It should look like this:
-```
-1 0 1 0 1
-0 1 0 1 0
-1 0 1 0 1
-0 1 0 1 0
-1 0 1 0 1
-0 1 0 1 0
-```
+    ```
+    1 0 1 0 1
+    0 1 0 1 0
+    1 0 1 0 1
+    0 1 0 1 0
+    1 0 1 0 1
+    0 1 0 1 0
+    ```
 
 4. A "long" listing of the smallest 5 files in the /etc directory whose name contains the string `.conf`, sorted by *increasing* file size.
 
@@ -23,10 +23,10 @@ For each question, give a series of UNIX commands that will produce the result.
 2. Permission was denied for the file.
 3. I used the following sequence: `yes “1 0” | fmt -10 | head -n 6`.
 4. I used the following sequence:
-```bash
-cd /etc
-ls -rS | grep ‘.conf’ | head -5; cd ..
-```
+    ```bash
+    cd /etc
+    ls -rS | grep ‘.conf’ | head -5; cd ..
+    ```
 
 # File Redirection
 Now we'd like to explore something slightly different, having to do with file redirection as discussed in Sections 6.2 - 6.4 of the paper. The authors explain that the following two commands are functionally equivalent (except that you have to remove the `temp` file afterwards in the second case). We’ll use `athena%` to indicate the command-line prompt.
