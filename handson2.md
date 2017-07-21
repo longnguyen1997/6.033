@@ -1,4 +1,4 @@
-# Exercises for Hands-on 1: UNIX
+# Exercises for Hands-on 2: UNIX
 
 # Pipe Questions
 For each question, give a series of UNIX commands that will produce the result.
@@ -144,7 +144,7 @@ ln foo foo-lnk
 stat foo
 stat foo-lnk
 ```
-Note that everything about `foo` and `foo``-lnk` is identical except for their names. If you modify `foo` you will see the modifications in `foo-lnk`.
+Note that everything about `foo` and `foo-lnk` is identical except for their names. If you modify `foo` you will see the modifications in `foo-lnk`.
 ```bash
 echo Hello >> foo cat foo-lnk
 ```
@@ -218,4 +218,4 @@ to file 1 with our arguments.
 18. This took just a few days, but not all questions were completed.
 
 # Unix Paper Reference
-[The UNIX Time-Sharing System](https://web.mit.edu/6.033/www/papers/protected/cacm.html)
+[The UNIX Time-Sharing System](https://web.mit.edu/6.033/www/papers/protected/cacm.html) (MIT certificates required)
