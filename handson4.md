@@ -71,7 +71,7 @@ abelbethmaachah [1570895, 1700412]
 ```python
 class ReverseIndex(MapReduce):
     """
-        Extends the Map Reduce class to produce ReverseIndex.
+    Extends the Map Reduce class to produce ReverseIndex.
     """
     def __init__(self, maptask, reducetask, path):
         MapReduce.__init__(self,  maptask, reducetask, path)
