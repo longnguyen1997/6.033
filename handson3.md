@@ -2,7 +2,7 @@
 
 1. Study `helgrind`'s output and the `ph.c` program. Clearly, something is wrong with `put()` on line 61. Identify a sequence of events that can lead to missing keys for 2 threads. Using that sequence, explain why there are missing keys with 2 or more threads, but not with 1 thread. Your explanation should refer to the given code and make use of theory to justify your answer.
 
-*Write or type your answers to both parts of questions 1 below. Your answers should not extend onto a second page.*
+*Write or type your answers to both parts of question 1 below. Your answers should not extend onto a second page.*
 
 1. In the `for` loop between lines 60 and 65, the function is looking for a place in the table to store the value. However, there’s no lock, and thus, another thread or program could’ve modified the value at some point. Because of this collision, both threads lose out on their values. With one thread, there are no race conditions and the thread is free to put its value into the hash table without risk of another thread coming in and modifying the data concurrently.
 
