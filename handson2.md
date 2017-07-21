@@ -23,6 +23,7 @@ For each question, give a series of UNIX commands that will produce the result.
 2. Permission was denied for the file.
 3. I used the following sequence: `yes “1 0” | fmt -10 | head -n 6`.
 4. I used the following sequence:
+
     ```bash
     cd /etc
     ls -rS | grep ‘.conf’ | head -5; cd ..
