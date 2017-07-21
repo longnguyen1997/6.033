@@ -1,6 +1,8 @@
 # 6.033 - Computer Systems Engineering
 
-Self-studied during the summer of 2017 in preparation for advanced graduate coursework in operating system and database engineering. Will be taken again during the spring of 2018 as a requirement under the MIT EECS curriculum.
+*Self-studied during the summer of 2017 in preparation for advanced graduate coursework in operating system and database engineering. Will be taken again during the spring of 2018 as a requirement under the MIT EECS curriculum.*
+
+## Objectives of 6.033
 
 After 6.033, the students will be able to design their own distributed systems to solve real-world problems. The ability to design one's own distributed system includes an ability to argue for one's design choices. 
 
