@@ -179,4 +179,133 @@ You can get Stanford's IP address from the website above. If you use a different
     30  * * *
     ```
 
-    7. Nothing seems unusual when comparing the output on both ends: our output indicates that the same routers are indeed traversed in both directions. In the case when this might not happen, there might have been a `time_exceeded` message sent from the destination, forcing the source to send its probing packets somewhere else to check (theoretically, as my commands worked fine).
+7. Nothing seems unusual when comparing the output on both ends: our output indicates that the same routers are indeed traversed in both directions. In the case when this might not happen, there might have been a `time_exceeded` message sent from the destination, forcing the source to send its probing packets somewhere else to check (theoretically, as my commands worked fine).
+
+# Blackholes
+At the command prompt, type: `> traceroute 18.31.0.200`.
+
+8. Show the output of the above command. Describe what is strange about the observed output, and why `traceroute` gives you such an output. Refer to `man traceroute` for useful hints.
+
+*Write or type your answers to question 8 below. Your answers should not extend onto a second page.*
+
+8. Output is as follows.
+
+    ```bash
+    traceroute to 18.31.0.200 (18.31.0.200), 30 hops max, 60 byte packets
+     1  18.9.64.3 (18.9.64.3)  8.184 ms  8.458 ms  8.185 ms
+     2  BACKBONE-RTR-1-OC11-RTR-1.MIT.EDU (18.123.69.1)  8.776 ms  9.024 ms  8.510 ms
+     3  DMZ-RTR-1-BACKBONE-RTR-1.MIT.EDU (18.69.1.1)  8.549 ms  9.129 ms  9.055 ms
+     4  DMZ-RTR-2-DMZ-RTR-1-1.MIT.EDU (18.192.2.2)  8.779 ms  8.941 ms  8.926 ms
+     5  * * *
+     6  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.502 ms  10.073 ms  10.069 ms
+     7  * * *
+     8  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  9.484 ms  9.954 ms  10.172 ms
+     9  * * *
+    10  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.200 ms  9.749 ms  11.729 ms
+    11  * * *
+    12  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.994 ms  10.901 ms  10.868 ms
+    13  * * *
+    14  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.002 ms  10.175 ms  8.776 ms
+    15  * * *
+    16  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.823 ms  10.319 ms  10.284 ms
+    17  * * *
+    18  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.775 ms  10.809 ms  11.084 ms
+    19  * * *
+    20  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  12.730 ms  12.713 ms  8.671 ms
+    21  * * *
+    22  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.200 ms  9.904 ms  8.952 ms
+    23  * * *
+    24  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  9.603 ms  9.124 ms  11.681 ms
+    25  * * *
+    26  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.466 ms  10.519 ms  10.318 ms
+    27  * * *
+    28  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.494 ms  10.541 ms  10.599 ms
+    29  * * *
+    30  DMZ-RTR-2-CSAIL.MIT.EDU (18.4.7.1)  10.861 ms  10.912 ms  10.969 ms
+    ```
+
+    This output is strange in the sense that packets are being lost (timeout limit of 5 seconds exceeded), but this is happening on every other line. I'm not quite sure of what this implies, but considering that the address `DMZ-RTR-2-CSAIL.MIT.EDU` is already reached and stayed on until 30 hops have been reached, it could be that the packets are stuck at this endpoint without anywhere to go to next, and thus die once reaching timeout.
+
+# Border Gateway Protocol (BGP)
+For this last question on the topic of Internet routing, you need to refer to the BGP routing table data below. This table shows all of the BGP routing entries that a particular router (near the University of Oregon) refers to when forwarding any packets to MIT (IP Address `18.*.*.*`).
+As described in the Internet routing paper, recall that BGP is a path vector protocol. Each line of this table lists a distinct path from this router to MIT, from which it will choose one to use. The `Next Hop` field is the IP address of the router that forwards packets for each path listed in the table. The `Path` field is the list of autonomous systems the path traverses on its way to MIT. The other fields (`Metric`, `LocPrf`, `Weight`) may be used by the router to decide which one of the possible paths to use.
+
+```
+BGP table version is 9993576, local router ID is 198.32.162.100
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              S Stale
+Origin codes: i - IGP, e - EGP, ? - incomplete
+```
+
+```
+   Network          Next Hop            Metric LocPrf Weight Path
+*  18.0.0.0         216.140.8.59           413             0 6395 3356 3 i
+*                   216.140.2.59           982             0 6395 3356 3 i
+*                   141.142.12.1                           0 1224 22335 11537 10578 3 i
+*                   209.249.254.19         125             0 6461 3356 3 i
+*                   202.232.0.2                            0 2497 3356 3 i
+*                   209.10.12.125         8204             0 4513 3356 3 i
+*                   208.51.113.253                         0 3549 174 16631 3 3 3 i
+*                   209.123.12.51                          0 8001 1784 10578 3 i
+*                   209.10.12.156            0             0 4513 3356 3 i
+*                   195.66.224.82                          0 4513 3356 3 i
+*                   209.10.12.28          8203             0 4513 3356 3 i
+*                   203.181.248.233                        0 7660 11537 10578 3 i
+*                   64.50.230.2                            0 4181 174 174 174 16631 3 3 3 i
+*                   195.66.232.254                         0 5459 2649 174 174 174 16631 3 3 3 i
+*                   195.66.232.239                         0 5459 2649 174 174 174 16631 3 3 3 i
+*                   64.50.230.1                            0 4181 174 174 174 16631 3 3 3 i
+*                   194.85.4.55                            0 3277 8482 29281 702 701 3356 3 i
+*                   207.172.6.227           83             0 6079 10578 3 i
+*                   207.172.6.162           62             0 6079 10578 3 i
+*                   129.250.0.85            11             0 2914 174 16631 3 3 3 i
+*                   206.220.240.95                         0 10764 11537 10578 3 i
+*                   217.75.96.60                           0 16150 8434 3257 3356 3 i
+*                   66.185.128.48          514             0 1668 3356 3 i
+*                   206.24.210.26                          0 3561 3356 3 i
+*                   216.191.65.118                         0 15290 174 16631 3 3 3 i
+*                   216.191.65.126                         0 15290 174 16631 3 3 3 i
+*                   209.161.175.4                          0 14608 19029 3356 3 i
+*                   202.249.2.86                           0 7500 2497 3356 3 i
+*                   208.186.154.35           0             0 5650 3356 3 i
+*                   167.142.3.6                            0 5056 1239 3356 3 i
+*                   64.200.151.12                          0 7911 3356 3 i
+*                   195.219.96.239                         0 6453 3356 3 i
+*                   208.186.154.36           0             0 5650 3356 3 i
+*                   203.194.0.12                           0 9942 16631 174 174 174 16631 3 3 3 i
+*                   213.200.87.254          40             0 3257 3356 3 i
+*                   216.218.252.145                        0 6939 3356 3 i
+*                   216.18.63.137                          0 6539 174 16631 3 3 3 i
+*                   216.218.252.152                        0 6939 3356 3 i
+*                   195.249.0.135                          0 3292 3356 3 i
+*                   65.106.7.139             3             0 2828 174 16631 3 3 3 i
+*                   207.45.223.244                         0 6453 3356 3 i
+*                   207.246.129.14                         0 11608 6461 3356 3 i
+*                   207.46.32.32                           0 8075 174 16631 3 3 3 i
+*                   129.250.0.11             0             0 2914 174 16631 3 3 3 i
+*                   134.55.200.1                           0 293 11537 10578 3 i
+*                   193.0.0.56                             0 3333 3356 3 i
+*                   216.140.14.186           3             0 6395 3356 3 i
+*                   198.32.8.196           960             0 11537 10578 3 i
+*                   64.200.95.239                          0 7911 3356 3 i
+*                   196.7.106.245                          0 2905 701 3356 3 i
+*                   154.11.63.86                           0 852 174 16631 3 3 3 i
+*                   134.222.85.45            0             0 286 209 3356 3 i
+*                   213.140.32.146                         0 12956 174 16631 3 3 3 i
+*                   164.128.32.11                          0 3303 3356 3 i
+*                   213.248.83.240                         0 1299 3356 3 i
+*                   154.11.98.18                           0 852 174 16631 3 3 3 i
+*                   4.68.0.243               0             0 3356 3 i
+*                   204.42.253.253           0             0 267 2914 174 16631 3 3 3 i
+*                   206.186.255.223                        0 2493 3602 174 16631 3 3 3 i
+*                   193.251.128.22                         0 5511 3356 3 i
+*                   203.62.252.26                          0 1221 4637 3356 3 i
+*                   12.0.1.63                              0 7018 3356 3 i
+*                   144.228.241.81  4294967294             0 1239 3356 3 i
+```
+
+9. From the path entry data, which Autonomous System (AS) number corresponds to MIT?
+10. What are the Autonomous System (AS) numbers of each AS which advertises a direct link to MIT?
+11. How long did it take you to complete this hands-on?
+
+*Write or type your answers to questions 9-11 below on the next page. Your answer should not extend to an additional page.*
