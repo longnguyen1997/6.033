@@ -1,6 +1,6 @@
 # Exercises for Hands-on 4: Map-Reduce
 
-# Studying mapreduce.py
+# Studying `mapreduce.py`
 
 1. The parameters to `WordCount`'s `__init__` method are `maptask` and `reducetask`. What does `maptask` control? What does `reducetask` control?
 2. Briefly explain how calling run triggers calls to both the `map` and `reduce` methods of the `WordCount` instance.
@@ -14,7 +14,7 @@
 3. `keyvalue` represents the key to be analyzed (current byte offset in the file), and `value` is the value corresponding to the key.
 4. `key` represents the intermediate key output, and `keyvalues` are the values mapped to it.
 
-# Modifying mapreduce.py
+# Modifying `mapreduce.py`
 Modify the program so that you can answer the following questions.
 
 5. How many invocations are there to `doMap` and how many to `doReduce`? Why?
